@@ -34,6 +34,7 @@ AddressBookClientWidget::AddressBookClientWidget(QWidget *parent)
     connect(ui->pushButtonRemoveLine, &QPushButton::clicked, this, &AddressBookClientWidget::pushButtonRemoveLineClicked);
     connect(ui->pushButtonEdit, &QPushButton::clicked, this, &AddressBookClientWidget::pushButtonEditClicked);
     connect(ui->pushButtonCancel, &QPushButton::clicked, this, &AddressBookClientWidget::pushButtonCancelClicked);
+    connect(ui->pushButtonSave, &QPushButton::clicked, this, &AddressBookClientWidget::pushButtonSaveClicked);
 
     connect(m_addAddressBookRowWidget, &AddAddressBookRowWidget::addRow, this, &AddressBookClientWidget::addAddressBookRowSlot);
 }
@@ -96,9 +97,17 @@ void AddressBookClientWidget::pushButtonCancelClicked()
     setEditActive(isEditBook);
 }
 
+void AddressBookClientWidget::pushButtonSaveClicked()
+{
+    m_addressBook->saveChanged();
+    isEditBook = false;
+    setEditActive(isEditBook);
+}
+
 void AddressBookClientWidget::tableViewDataChangedSlot(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
 {
-
+    if(isEditBook)
+        m_addressBook->addChangedRow(topLeft);
 }
 
 void AddressBookClientWidget::tableViewSelectionChangedSlot(const QItemSelection &selected, const QItemSelection &deselected)

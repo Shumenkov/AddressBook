@@ -29,6 +29,8 @@ public:
 
     void addBufferChangeItem(const QModelIndex& index);
     void restoreModel();
+    void addChangedRow(const QModelIndex& index);
+    void saveChanged();
 
     void updateAddressBookRows(const QVector<quint16>& rows);
 
@@ -39,6 +41,7 @@ private:
 
     TableModel* m_addressBookModel;
     QMap<QModelIndex, QVariant> m_changedItemsBuffer;
+    QList<QModelIndex> m_changedRows;
 
     TcpMessages* m_tcpMessages;
 

@@ -30,6 +30,7 @@ private slots:
     void addAddrBookRowSlot(const qint32 &linkCount, const AddressBookRow& addressBookRow);
     void getAddrBookDataSlot(const qint32 &linkCount);
     void removeRowSlot(const qint32 &linkCount, const RemoveRowIDs &removeRowIDs);
+    void updateDataSlot(const qint32 &linkCount, const AddressBookData &addressBookData);
 };
 
 

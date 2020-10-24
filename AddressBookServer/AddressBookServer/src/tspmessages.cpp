@@ -60,6 +60,13 @@ void TcpMessages::parseRemoveRow(const qint32 &linkCount, QDataStream &dataStrea
     emit removeRowSignal(linkCount, removeRowIDs);
 }
 
+void TcpMessages::parseUpdateData(const qint32 &linkCount, QDataStream &dataStream)
+{
+    AddressBookData addressBookData;
+    dataStream >> addressBookData;
+    emit updateDataSignal(linkCount, addressBookData);
+}
+
 void TcpMessages::dataReceiveSlot(const qint32 &linkCount, const QByteArray &data)
 {
     QDataStream inputStream(data);
@@ -76,6 +83,9 @@ void TcpMessages::dataReceiveSlot(const qint32 &linkCount, const QByteArray &dat
         break;
     case REMOVE_ROW:
         parseRemoveRow(linkCount, inputStream);
+        break;
+    case UPDATE_ADDR_BOOK_DATA:
+        parseUpdateData(linkCount, inputStream);
         break;
 
     }

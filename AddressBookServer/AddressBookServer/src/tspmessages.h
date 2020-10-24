@@ -25,6 +25,7 @@ signals:
     void getAddrBookData(const qint32 &linkCount);
     void addAddrBookRowSignal(const qint32 &linkCount, const AddressBookRow& addressBookRow);
     void removeRowSignal(const qint32 &linkCount, const RemoveRowIDs& id);
+    void updateDataSignal(const qint32 &linkCount, const AddressBookData& id);
 
 public slots:
 
@@ -33,6 +34,7 @@ private:
 
     void parseAddAddrBookRow(const qint32 &linkCount, QDataStream &dataStream);
     void parseRemoveRow(const qint32 &linkCount, QDataStream &dataStream);
+    void parseUpdateData(const qint32 &linkCount, QDataStream &dataStream);
 
 private slots:
     void dataReceiveSlot(const qint32 &linkCount, const QByteArray &data);

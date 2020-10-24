@@ -79,6 +79,40 @@ void AddressBook::restoreModel()
     m_changedItemsBuffer.clear();
 }
 
+void AddressBook::addChangedRow(const QModelIndex &index)
+{
+    QModelIndex rowIndex = index.sibling(index.row(), AddressBookTableDataPosition::ID);
+    if(!m_changedRows.contains(rowIndex))
+        m_changedRows.append(rowIndex);
+}
+
+void AddressBook::saveChanged()
+{
+    AddressBookData addressBookData;
+    AddressBookRow addressBookRow;
+    for(QModelIndex index : m_changedRows)
+    {
+        addressBookRow.id = m_addressBookModel->data(index).toUInt();
+
+        index = index.sibling(index.row(), AddressBookTableDataPosition::SECOND_NAME);
+        addressBookRow.secondName = m_addressBookModel->data(index).toString();
+
+        index = index.sibling(index.row(), AddressBookTableDataPosition::FIRST_NAME);
+        addressBookRow.firstName = m_addressBookModel->data(index).toString();
+
+        index = index.sibling(index.row(), AddressBookTableDataPosition::PATRONYMIC);
+        addressBookRow.patronymic = m_addressBookModel->data(index).toString();
+
+        index = index.sibling(index.row(), AddressBookTableDataPosition::GENDER);
+        addressBookRow.gender = m_addressBookModel->data(index).toString();
+
+        index = index.sibling(index.row(), AddressBookTableDataPosition::PHONE_NUMBER);
+        addressBookRow.phoneNumber = m_addressBookModel->data(index).toString();
+        addressBookData.list.append(addressBookRow);
+    }
+    m_tcpMessages->updateAddressBookData(addressBookData);
+}
+
 void AddressBook::updateAddressBookRows(const QVector<quint16> &rows)
 {
     AddressBookData addressBookData;

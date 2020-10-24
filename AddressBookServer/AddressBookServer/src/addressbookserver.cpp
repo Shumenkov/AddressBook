@@ -16,6 +16,7 @@ AddressBookServer::AddressBookServer(QObject *parent) : QObject(parent),
     connect(m_tcpMessages, &TcpMessages::addAddrBookRowSignal, this, &AddressBookServer::addAddrBookRowSlot);
     connect(m_tcpMessages, &TcpMessages::getAddrBookData, this, &AddressBookServer::getAddrBookDataSlot);
     connect(m_tcpMessages, &TcpMessages::removeRowSignal, this, &AddressBookServer::removeRowSlot);
+    connect(m_tcpMessages, &TcpMessages::updateDataSignal, this, &AddressBookServer::updateDataSlot);
 }
 
 AddressBookServer::~AddressBookServer()
@@ -51,6 +52,13 @@ void AddressBookServer::removeRowSlot(const qint32 &linkCount, const RemoveRowID
     }
 
     m_tcpMessages->sendRowRemoved(linkCount, removedRowIDs);
+}
+
+void AddressBookServer::updateDataSlot(const qint32 &linkCount, const AddressBookData &addressBookData)
+{
+    Q_UNUSED(linkCount);
+    bool isUpdate = m_dbProvider->updateAddressBookData(addressBookData);
+    qDebug()<<"Update address book data " << isUpdate;
 }
 
 

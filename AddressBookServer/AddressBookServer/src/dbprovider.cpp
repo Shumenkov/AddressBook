@@ -50,7 +50,7 @@ AddressBookData DBProvider::selectAddressBookData() const
         addressBookRow.firstName = _query.value(record.indexOf("first_name")).toString();
         addressBookRow.patronymic = _query.value(record.indexOf("patronymic")).toString();
         addressBookRow.gender = _query.value(record.indexOf("gender")).toString();
-        addressBookRow.phoneNumber = _query.value(record.indexOf("phone_number")).toUInt();
+        addressBookRow.phoneNumber = _query.value(record.indexOf("phone_number")).toString();
         addressBookData.list.append(addressBookRow);
     }
 
@@ -59,13 +59,33 @@ AddressBookData DBProvider::selectAddressBookData() const
 
 bool DBProvider::removeRow(const quint32 &id)
 {
-     QString queryHeadStr = "DELETE FROM address_book WHERE id = %1;";
-     QString queryStr = queryHeadStr.arg(QString::number(id));
-     QSqlQuery query;
-     if(query.exec(queryStr))
-         return true;
-     else
-         return false;
+    QString queryHeadStr = "DELETE FROM address_book WHERE id = %1;";
+    QString queryStr = queryHeadStr.arg(QString::number(id));
+    QSqlQuery query;
+    if(query.exec(queryStr))
+        return true;
+    else
+        return false;
+}
+
+bool DBProvider::updateAddressBookData(const AddressBookData &addressBookData)
+{
+    bool returnVal = true;
+    for(AddressBookRow addressBookRow : addressBookData.list)
+    {
+        QString queryStr =  "UPDATE address_book SET second_name = '" + addressBookRow.secondName
+                + "', first_name = '"+ addressBookRow.firstName
+                +"', patronymic = '"+ addressBookRow.patronymic
+                +"', gender = '"+ addressBookRow.gender
+                +"', phone_number = '"+ addressBookRow.phoneNumber
+                +"' WHERE id = " + QString::number(addressBookRow.id) + ";";
+        qDebug()<<queryStr;
+        QSqlQuery _query;
+        if(!_query.exec(queryStr))
+            returnVal = false;
+    }
+
+    return returnVal;
 }
 
 bool DBProvider::openDB()

@@ -41,6 +41,7 @@ private slots:
     void pushButtonRemoveLineClicked();
     void pushButtonEditClicked();
     void pushButtonCancelClicked();
+    void pushButtonSaveClicked();
 
     void tableViewDataChangedSlot(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles = QVector<int>());
     void tableViewSelectionChangedSlot(const QItemSelection &selected, const QItemSelection &deselected);
