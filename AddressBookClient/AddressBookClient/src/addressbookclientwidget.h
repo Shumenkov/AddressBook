@@ -17,10 +17,11 @@ class AddressBook;
 class SettingsWidget;
 class AddAddressBookRowWidget;
 
+
+//! \brief The AddressBookClientWidget class - основное окно приложения
 class AddressBookClientWidget : public QWidget
 {
     Q_OBJECT
-
 public:
     AddressBookClientWidget(QWidget *parent = nullptr);
     ~AddressBookClientWidget();

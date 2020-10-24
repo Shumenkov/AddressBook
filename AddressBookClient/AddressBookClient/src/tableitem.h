@@ -6,7 +6,7 @@
 namespace AddressBook{
 namespace Client{
 
-
+//! \brief The TableItem class - класс ячейки в таблице
 class TableItem
 {
 public:

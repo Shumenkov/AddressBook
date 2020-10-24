@@ -13,13 +13,14 @@ namespace Client{
 
 class Settings;
 
+//! \brief The SettingsWidget class - окно настроек приложения
 class SettingsWidget : public QWidget
 {
     Q_OBJECT
 
 public:
     explicit SettingsWidget(QWidget *parent = nullptr);
-    ~SettingsWidget();
+    virtual ~SettingsWidget();
 
 private:
     Ui::SettingsWidget *ui;

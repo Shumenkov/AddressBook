@@ -21,6 +21,7 @@ AddressBook::AddressBook(QObject *parent) : QObject(parent),
     m_addressBookModel = new TableModel(addressBookColumnCount, m_tableHeader, this);
 
     connect(m_tcpMessages, &TcpMessages::connectToServer, this, &AddressBook::connectedToServerSlot);
+    connect(m_tcpMessages, &TcpMessages::disconnectToServer, this, &AddressBook::disconnectedToServerSlot);
     connect(m_tcpMessages, &TcpMessages::setAddressBookData, this, &AddressBook::setAddressBookDataSlot);
     connect(m_tcpMessages, &TcpMessages::addAddrBookRow, this, &AddressBook::addAddrBookRowSlot);
     connect(m_tcpMessages, &TcpMessages::rowRemovedSignal, this, &AddressBook::rowRemovedSlot);
@@ -28,9 +29,9 @@ AddressBook::AddressBook(QObject *parent) : QObject(parent),
 
 AddressBook::~AddressBook()
 {
+    delete m_tcpMessages;
     if(m_addressBookModel!=nullptr)
         delete m_addressBookModel;
-    delete m_tcpMessages;
 }
 
 QAbstractItemModel *AddressBook::addressBookModel()
@@ -153,6 +154,11 @@ QVector<TableItem *> AddressBook::fillTableModelRow(const AddressBookRow &addres
 void AddressBook::connectedToServerSlot()
 {
     m_tcpMessages->getAddressBookData();
+}
+
+void AddressBook::disconnectedToServerSlot()
+{
+    m_addressBookModel->clearAll();
 }
 
 void AddressBook::setAddressBookDataSlot(const AddressBookData &addressBookData)

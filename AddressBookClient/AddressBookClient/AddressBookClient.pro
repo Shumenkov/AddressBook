@@ -11,6 +11,8 @@ INCLUDEPATH += ../../AddressBookNetInteraction/AddressBookNetInteraction/src
 LIBS += -L../../AddressBookNetInteraction/AddressBookNetInteraction/debug -lAddressBookNetInteraction
 LIBS += -L../../AddressBookNetInteraction/AddressBookNetInteraction/release -lAddressBookNetInteraction
 
+TRANSLATIONS += translation_ru.ts
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin

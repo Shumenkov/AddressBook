@@ -12,6 +12,7 @@ namespace Ui {
 namespace AddressBook{
 namespace Client{
 
+//! \brief The AddAddressBookRowWidget class - класс для отображения окна добавления новой записи
 class AddAddressBookRowWidget : public QWidget
 {
     Q_OBJECT
@@ -21,6 +22,8 @@ public:
     ~AddAddressBookRowWidget();
 
 signals:
+    //! \brief addRow - Была добавленна новая запись
+    //! \param AddressBookRow - структура с данными о новой записи
     void addRow(const AddressBookRow& AddressBookRow);
 
 private:

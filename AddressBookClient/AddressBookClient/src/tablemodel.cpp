@@ -90,8 +90,8 @@ void TableModel::addRows(const QVector<QVector<TableItem *> > &lines)
         m_lines.append(line);
     }
     if(lines.size()>0)
-    emit dataChanged(this->index(indexBeforeChanged, indexBeforeChanged),
-                     this->index(m_lines.size()-1, m_lines.at(m_lines.size()-1).count()-1));
+        emit dataChanged(this->index(indexBeforeChanged, indexBeforeChanged),
+                         this->index(m_lines.size()-1, m_lines.at(m_lines.size()-1).count()-1));
     endResetModel();
 }
 
@@ -115,8 +115,12 @@ void TableModel::removeRow(const int &row)
 
     beginResetModel();
     m_lines.removeAt(row);
-    emit dataChanged(this->index(m_lines.size()-1, m_lines.size()-1),
-                     this->index(m_lines.size()-1, m_lines.at(m_lines.size()-1).count()-1));
+    if(m_lines.size()==0)
+        emit dataChanged(this->index(0, 0),
+                         this->index(0, 0));
+    else
+        emit dataChanged(this->index(m_lines.size()-1, m_lines.size()-1),
+                         this->index(m_lines.size()-1, m_lines.at(m_lines.size()-1).count()-1));
     endResetModel();
 }
 
@@ -159,6 +163,23 @@ Qt::ItemFlags TableModel::flags(const QModelIndex &index) const
     if (!index.isValid())
         return 0;
     return Qt::ItemIsEditable | QAbstractItemModel::flags(index);
+}
+
+void TableModel::clearAll()
+{
+    for(int i = 0; i < m_lines.size(); ++i)
+    {
+        for(int j = 0; j < m_lines[i].size(); ++j)
+        {
+            delete m_lines[i][j];
+        }
+    }
+
+    beginResetModel();
+    m_lines.clear();
+    emit dataChanged(this->index(0, 0),
+                     this->index(0, 0));
+    endResetModel();
 }
 
 QVariant TableModel::headerData(int section, Qt::Orientation orientation, int role) const

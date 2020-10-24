@@ -1,6 +1,7 @@
 #ifndef ENUMS_H
 #define ENUMS_H
 
+//! \brief The AddressBookTableDataPosition enum - позиции столбцов в таблице адресной книги
 enum AddressBookTableDataPosition
 {
     ID = 0,

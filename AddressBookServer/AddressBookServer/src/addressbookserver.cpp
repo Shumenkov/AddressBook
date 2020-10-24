@@ -32,6 +32,7 @@ void AddressBookServer::addAddrBookRowSlot(const qint32 &linkCount, const Addres
     {
         AddressBookRow addedAddressBookRow = addressBookRow;
         addedAddressBookRow.id = addRowId;
+        qDebug()<<"Add row" << addedAddressBookRow.id << addedAddressBookRow.secondName << addedAddressBookRow.secondName << addedAddressBookRow.patronymic << addedAddressBookRow.gender << addedAddressBookRow.phoneNumber;
         m_tcpMessages->addAddrBookRow(linkCount, addedAddressBookRow);
     }
 }
@@ -48,7 +49,10 @@ void AddressBookServer::removeRowSlot(const qint32 &linkCount, const RemoveRowID
     for(quint32 id : removeRowIDs.idList)
     {
         if(m_dbProvider->removeRow(id))
+        {
             removedRowIDs.idList.append(id);
+            qDebug()<<"Remove row" << id;
+        }
     }
 
     m_tcpMessages->sendRowRemoved(linkCount, removedRowIDs);
@@ -58,7 +62,7 @@ void AddressBookServer::updateDataSlot(const qint32 &linkCount, const AddressBoo
 {
     Q_UNUSED(linkCount);
     bool isUpdate = m_dbProvider->updateAddressBookData(addressBookData);
-    qDebug()<<"Update address book data " << isUpdate;
+    qDebug()<<"Update address book data" << isUpdate;
 }
 
 

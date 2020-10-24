@@ -25,6 +25,7 @@ public:
     void initialize(Settings* p);
 };
 
+//! \brief The Settings class - класс настроек приложения, настройки хранятся в ini файле
 class Settings : public QObject
 {
     Q_OBJECT
@@ -45,14 +46,11 @@ public:
     quint32 port();
     void setPort(const quint32 &port);
 
-
 private:
     QSettings* settings;
 
     QString m_ipAddress;
     quint32 m_port;
-
-
 };
 
 

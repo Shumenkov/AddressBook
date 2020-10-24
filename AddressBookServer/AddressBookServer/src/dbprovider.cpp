@@ -79,7 +79,6 @@ bool DBProvider::updateAddressBookData(const AddressBookData &addressBookData)
                 +"', gender = '"+ addressBookRow.gender
                 +"', phone_number = '"+ addressBookRow.phoneNumber
                 +"' WHERE id = " + QString::number(addressBookRow.id) + ";";
-        qDebug()<<queryStr;
         QSqlQuery _query;
         if(!_query.exec(queryStr))
             returnVal = false;

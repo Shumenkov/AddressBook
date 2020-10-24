@@ -17,11 +17,15 @@ AddressBookClientWidget::AddressBookClientWidget(QWidget *parent)
     , m_addAddressBookRowWidget(new AddAddressBookRowWidget)
 {
     ui->setupUi(this);
+
     setEditActive(false);
 
     m_addressBook = new AddressBook();
     ui->tableViewAddressBook->setModel(m_addressBook->addressBookModel());
     ui->tableViewAddressBook->setColumnHidden(AddressBookTableDataPosition::ID, true);
+    ui->tableViewAddressBook->horizontalHeader()->setSectionResizeMode(AddressBookTableDataPosition::SECOND_NAME, QHeaderView::Stretch);
+    ui->tableViewAddressBook->horizontalHeader()->setSectionResizeMode(AddressBookTableDataPosition::FIRST_NAME, QHeaderView::Stretch);
+    ui->tableViewAddressBook->horizontalHeader()->setSectionResizeMode(AddressBookTableDataPosition::PATRONYMIC, QHeaderView::Stretch);
 
     connect(ui->tableViewAddressBook, &QTableView::doubleClicked, this, &AddressBookClientWidget::tableViewDoubleClickedSlot);
     connect(ui->tableViewAddressBook->model(), &QAbstractItemModel::dataChanged,
@@ -49,8 +53,8 @@ AddressBookClientWidget::~AddressBookClientWidget()
 
 void AddressBookClientWidget::setEditActive(bool isEdit)
 {
-    ui->pushButtonAddLine->setVisible(isEdit);
-    ui->pushButtonRemoveLine->setVisible(isEdit);
+    ui->pushButtonAddLine->setEnabled(!isEdit);
+    ui->pushButtonRemoveLine->setEnabled(!isEdit);
     ui->pushButtonCancel->setVisible(isEdit);
     ui->pushButtonSave->setVisible(isEdit);
     ui->pushButtonEdit->setEnabled(!isEdit);
@@ -106,6 +110,9 @@ void AddressBookClientWidget::pushButtonSaveClicked()
 
 void AddressBookClientWidget::tableViewDataChangedSlot(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
 {
+    Q_UNUSED(bottomRight);
+    Q_UNUSED(roles);
+
     if(isEditBook)
         m_addressBook->addChangedRow(topLeft);
 }
@@ -114,6 +121,7 @@ void AddressBookClientWidget::tableViewSelectionChangedSlot(const QItemSelection
 {
     Q_UNUSED(selected);
     Q_UNUSED(deselected);
+
     m_selectedRows = ui->tableViewAddressBook->selectionModel()->selectedRows();
 }
 
