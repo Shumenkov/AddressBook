@@ -57,6 +57,17 @@ AddressBookData DBProvider::selectAddressBookData() const
     return addressBookData;
 }
 
+bool DBProvider::removeRow(const quint32 &id)
+{
+     QString queryHeadStr = "DELETE FROM address_book WHERE id = %1;";
+     QString queryStr = queryHeadStr.arg(QString::number(id));
+     QSqlQuery query;
+     if(query.exec(queryStr))
+         return true;
+     else
+         return false;
+}
+
 bool DBProvider::openDB()
 {
     QFile dbFile(_dbName);

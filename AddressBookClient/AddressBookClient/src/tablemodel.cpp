@@ -120,21 +120,6 @@ void TableModel::removeRow(const int &row)
     endResetModel();
 }
 
-void TableModel::removeRow(const QModelIndexList &rows)
-{
-    beginResetModel();
-    for(QModelIndex row : rows)
-    {
-        if(row.row()>=m_lines.size())
-            continue;;
-        m_lines.removeAt(row.row());
-    }
-    if(m_lines.size() > 0)
-    emit dataChanged(this->index(m_lines.size()-1, m_lines.size()-1),
-                     this->index(m_lines.size()-1, m_lines.at(m_lines.size()-1).count()-1));
-    endResetModel();
-}
-
 QModelIndex TableModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (parent.isValid() && parent.column() != 0)
@@ -149,6 +134,18 @@ QModelIndex TableModel::index(int row, int column, const QModelIndex &parent) co
         return QModelIndex();
 
     return createIndex(row, column, item);
+}
+
+QModelIndex TableModel::indexByData(int column, const QVariant &data)
+{
+    if(column>=m_columns)
+        return QModelIndex();
+    for(int row = 0; row < m_lines.size(); ++row)
+    {
+        if(m_lines[row][column]->data() == data)
+            return createIndex(row,column,m_lines[row][column]);
+    }
+    return QModelIndex();
 }
 
 QModelIndex TableModel::parent(const QModelIndex &index) const

@@ -36,6 +36,18 @@ QDataStream &operator<<(QDataStream &s, const AddressBookData &p)
     return s;
 }
 
+QDataStream &operator>>(QDataStream &s, RemoveRowIDs &p)
+{
+    s >> p.idList;
+    return s;
+}
+
+QDataStream &operator<<(QDataStream &s, const RemoveRowIDs &p)
+{
+    s << p.idList;
+    return s;
+}
+
 
 
 }

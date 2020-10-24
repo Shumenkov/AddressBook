@@ -11,7 +11,9 @@ enum MessageType
     SEND_ADDR_BOOK_DATA = 1,
     GET_ADDR_BOOK_DATA = 2,
     UPDATE_ADDR_BOOK_DATA = 3,
-    ADD_ADDR_BOOK_ROW_FROM_SERVER = 4
+    ADD_ADDR_BOOK_ROW_FROM_SERVER = 4,
+    REMOVE_ROW = 5,
+    ROW_REMOVED = 6
 };
 
 struct AddressBookRow
@@ -49,6 +51,12 @@ struct AddressBookData
 QDataStream &operator>> (QDataStream& s, AddressBookData& p);
 QDataStream &operator<< (QDataStream& s, const AddressBookData& p);
 
+struct RemoveRowIDs
+{
+    QList<quint32> idList;
+};
+QDataStream &operator>> (QDataStream& s, RemoveRowIDs& p);
+QDataStream &operator<< (QDataStream& s, const RemoveRowIDs& p);
 
 }
 

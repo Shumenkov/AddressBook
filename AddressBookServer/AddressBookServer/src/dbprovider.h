@@ -19,8 +19,8 @@ public:
     virtual ~DBProvider();
 
     quint32 addAddressBookRow(const AddressBookRow& addressBookRow);
-
     AddressBookData selectAddressBookData() const;
+    bool removeRow(const quint32& id);
 
 signals:
 

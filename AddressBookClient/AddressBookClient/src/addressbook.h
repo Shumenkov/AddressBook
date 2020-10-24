@@ -48,6 +48,7 @@ private slots:
     void connectedToServerSlot();
     void setAddressBookDataSlot(const AddressBookData& addressBookData);
     void addAddrBookRowSlot(const AddressBookRow& addressBookRow);
+    void rowRemovedSlot(const RemoveRowIDs& removedRowIDs);
 };
 
 }}

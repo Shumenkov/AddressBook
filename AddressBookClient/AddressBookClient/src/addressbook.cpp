@@ -23,6 +23,7 @@ AddressBook::AddressBook(QObject *parent) : QObject(parent),
     connect(m_tcpMessages, &TcpMessages::connectToServer, this, &AddressBook::connectedToServerSlot);
     connect(m_tcpMessages, &TcpMessages::setAddressBookData, this, &AddressBook::setAddressBookDataSlot);
     connect(m_tcpMessages, &TcpMessages::addAddrBookRow, this, &AddressBook::addAddrBookRowSlot);
+    connect(m_tcpMessages, &TcpMessages::rowRemovedSignal, this, &AddressBook::rowRemovedSlot);
 }
 
 AddressBook::~AddressBook()
@@ -44,12 +45,24 @@ void AddressBook::addLine(const AddressBookRow &addressBookRow)
 
 void AddressBook::removeLine(const int &row)
 {
-    m_addressBookModel->removeRow(row);
+    QModelIndex index;
+    index.sibling(row, AddressBookTableDataPosition::ID);
+    quint32 id = m_addressBookModel->data(index).toUInt();
+    RemoveRowIDs removeRowIDs;
+    removeRowIDs.idList.append(id);
+    m_tcpMessages->removeRow(removeRowIDs);
 }
 
 void AddressBook::removeLine(const QModelIndexList &rows)
 {
-    m_addressBookModel->removeRow(rows);
+    RemoveRowIDs removeRowIDs;
+    for(QModelIndex index : rows)
+    {
+        index.sibling(index.row(), AddressBookTableDataPosition::ID);
+        removeRowIDs.idList.append(m_addressBookModel->data(index).toUInt());
+    }
+
+    m_tcpMessages->removeRow(removeRowIDs);
 }
 
 void AddressBook::addBufferChangeItem(const QModelIndex &index)
@@ -120,6 +133,12 @@ void AddressBook::setAddressBookDataSlot(const AddressBookData &addressBookData)
 void AddressBook::addAddrBookRowSlot(const AddressBookRow &addressBookRow)
 {
     m_addressBookModel->addRow(fillTableModelRow(addressBookRow));
+}
+
+void AddressBook::rowRemovedSlot(const RemoveRowIDs &removedRowIDs)
+{
+    for(quint32 id : removedRowIDs.idList)
+        m_addressBookModel->removeRow(m_addressBookModel->indexByData(AddressBookTableDataPosition::ID, id).row());
 }
 
 }}

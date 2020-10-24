@@ -50,6 +50,16 @@ void TcpMessages::updateAddressBookData(const AddressBookData &addressBookData)
     m_tcpClient->sendData(messageData);
 }
 
+void TcpMessages::removeRow(const RemoveRowIDs &removeRowIDs)
+{
+    QByteArray messageData;
+    QDataStream messageDataStream(&messageData, QIODevice::ReadWrite);
+    quint8 tcpMessageType = REMOVE_ROW;
+    messageDataStream<<tcpMessageType;
+    messageDataStream<<removeRowIDs;
+    m_tcpClient->sendData(messageData);
+}
+
 void TcpMessages::parseAddrBookData(QDataStream &dataStream)
 {
     AddressBookData addressBookData;
@@ -62,6 +72,13 @@ void TcpMessages::parseAddAddrBookRow(QDataStream &dataStream)
     AddressBookRow addressBookRow;
     dataStream>>addressBookRow;
     emit addAddrBookRow(addressBookRow);
+}
+
+void TcpMessages::parseRowRemoved(QDataStream &dataStream)
+{
+    RemoveRowIDs removedRowIDs;
+    dataStream>>removedRowIDs;
+    emit rowRemovedSignal(removedRowIDs);
 }
 
 void TcpMessages::dataReceiveSlot(const QByteArray &data)
@@ -77,6 +94,9 @@ void TcpMessages::dataReceiveSlot(const QByteArray &data)
         break;
     case ADD_ADDR_BOOK_ROW_FROM_SERVER:
         parseAddAddrBookRow(inputStream);
+        break;
+    case ROW_REMOVED:
+        parseRowRemoved(inputStream);
         break;
     }
 }

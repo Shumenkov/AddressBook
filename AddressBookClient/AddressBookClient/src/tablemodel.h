@@ -33,9 +33,9 @@ public:
     void addEmptyRow();
 
     void removeRow(const int& row);
-    void removeRow(const QModelIndexList& rows);
 
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
+    QModelIndex indexByData(int column, const QVariant& data);
     QModelIndex parent(const QModelIndex &index) const override;
 
     Qt::ItemFlags flags(const QModelIndex &index) const override;
