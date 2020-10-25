@@ -18,8 +18,18 @@ AddAddressBookRowWidget::~AddAddressBookRowWidget()
     delete ui;
 }
 
+void AddAddressBookRowWidget::clearAll()
+{
+    ui->lineEditFName->clear();
+    ui->lineEditSName->clear();
+    ui->lineEditGender->clear();
+    ui->lineEditPatronymic->clear();
+    ui->lineEditPhoneNumber->clear();
+}
+
 void AddAddressBookRowWidget::pushButtonCancelClicked()
 {
+    clearAll();
     this->close();
 }
 
@@ -32,6 +42,7 @@ void AddAddressBookRowWidget::pushButtonAddClicked()
                                   ui->lineEditGender->text(),
                                   ui->lineEditPhoneNumber->text());
     emit addRow(addressBookRow);
+    clearAll();
     this->close();
 }
 

@@ -1,7 +1,6 @@
 #include "tspmessages.h"
 #include "tcpserver.h"
 
-
 namespace AddressBook{
 namespace Server{
 
@@ -87,7 +86,6 @@ void TcpMessages::dataReceiveSlot(const qint32 &linkCount, const QByteArray &dat
     case UPDATE_ADDR_BOOK_DATA:
         parseUpdateData(linkCount, inputStream);
         break;
-
     }
 }
 

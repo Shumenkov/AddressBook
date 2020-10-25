@@ -65,5 +65,4 @@ void AddressBookServer::updateDataSlot(const qint32 &linkCount, const AddressBoo
     qDebug()<<"Update address book data" << isUpdate;
 }
 
-
 }}

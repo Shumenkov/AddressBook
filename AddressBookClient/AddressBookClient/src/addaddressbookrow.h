@@ -29,6 +29,8 @@ signals:
 private:
     Ui::AddAddressBookRow *ui;
 
+    void clearAll();
+
 private slots:
     void pushButtonCancelClicked();
     void pushButtonAddClicked();

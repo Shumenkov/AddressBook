@@ -4,7 +4,7 @@ namespace AddressBook{
 namespace Server{
 
 
-DBProvider::DBProvider(QString dbName, QObject *parent)
+DBProvider::DBProvider(const QString& dbName, QObject *parent)
     : QObject(parent)
     , _dbName(dbName)
     , _dataBase(QSqlDatabase::addDatabase("QSQLITE"))
@@ -120,7 +120,6 @@ bool DBProvider::restoreDB()
         _isDBOpen = true;
 
     QFile createFile(QDir::currentPath() + "/" + CREATE_FILE_NAME);
-    //QFile createFile(":/db_create.sql");
     if(!createFile.open(QIODevice::ReadOnly))
         return false;
 

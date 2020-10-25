@@ -28,7 +28,6 @@ TcpServer::TcpServer(QString host, quint16 port, QObject *parent)
         else
             qDebug() << "Server binded to " << host << " " << port;
     }
-
 }
 
 TcpServer::~TcpServer()
@@ -65,7 +64,7 @@ void TcpServer::sendData(const QByteArray &data, qint32 linkCount)
     {
         foreach(QObject* child, children())
         {
-            if(child->inherits("Conditioning::Imitator::TcpServerLink"))
+            if(child->inherits("AddressBook::Server::TcpServerLink"))
             {
                 TcpServerLink* link = qobject_cast<TcpServerLink*>(child);
                 link->sendData(data);
@@ -90,7 +89,7 @@ void TcpServer::slotNewConnection()
     }
 }
 
-void TcpServer::linkDisconnected(qint32 linkCount)
+void TcpServer::linkDisconnected(const qint32 &linkCount)
 {
    if(m_links.size()>linkCount)
    {

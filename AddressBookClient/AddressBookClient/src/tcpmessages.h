@@ -21,7 +21,7 @@ public:
     void getAddressBookData();
 
     //! \brief addAddressBookRow - добавить новую строку на сервер
-    //! \param addressBookRow
+    //! \param addressBookRow - структура с записью в записной книге
     void addAddressBookRow(const AddressBookRow &addressBookRow);
 
     //! \brief updateAddressBookData - обновить данные на сервере

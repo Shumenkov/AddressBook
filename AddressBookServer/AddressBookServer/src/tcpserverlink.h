@@ -9,7 +9,7 @@
 namespace AddressBook{
 namespace Server{
 
-
+//! \brief The TcpServerLink class - класс соединения с клиентом
 class TcpServerLink : public QObject
 {
     Q_OBJECT
@@ -23,8 +23,8 @@ public:
     void open();
 
 signals:
-    void dataReceive(qint32 linkCount, const QByteArray &data);
-    void disconnected(qint32 linkCount);
+    void dataReceive(const qint32& linkCount, const QByteArray &data);
+    void disconnected(const qint32& linkCount);
 
 private:
     qint32 m_linkCount;

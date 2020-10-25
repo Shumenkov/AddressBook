@@ -5,6 +5,7 @@
 
 namespace AddressBook {
 
+//! \brief The MessageType enum - типы отправляемых сообщений по tcp
 enum MessageType
 {
     ADD_ADDR_BOOK_ROW = 0,
@@ -16,6 +17,7 @@ enum MessageType
     ROW_REMOVED = 6
 };
 
+//! \brief The AddressBookRow struct - структура с информацией об одной записи в адресной книге
 struct AddressBookRow
 {
     AddressBookRow(){}
@@ -43,6 +45,8 @@ struct AddressBookRow
 QDataStream &operator>> (QDataStream& s, AddressBookRow& p);
 QDataStream &operator<< (QDataStream& s, const AddressBookRow& p);
 
+
+//! \brief The AddressBookData struct - список структур с информацией об одной записи в адресной книге
 struct AddressBookData
 {
     AddressBookData(){}
@@ -51,6 +55,8 @@ struct AddressBookData
 QDataStream &operator>> (QDataStream& s, AddressBookData& p);
 QDataStream &operator<< (QDataStream& s, const AddressBookData& p);
 
+
+//! \brief The RemoveRowIDs struct - список удаляемых записей
 struct RemoveRowIDs
 {
     QList<quint32> idList;

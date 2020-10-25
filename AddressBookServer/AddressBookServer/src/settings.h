@@ -30,6 +30,7 @@ public:
     void initialize(Settings* p);
 };
 
+//! \brief The Settings class - класс настроек приложения, настройки хранятся в ini файле
 class Settings : public QObject
 {
     Q_OBJECT

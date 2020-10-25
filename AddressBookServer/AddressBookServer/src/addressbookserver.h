@@ -7,11 +7,11 @@
 namespace AddressBook{
 namespace Server{
 
-    class TcpMessages;
-    class DBProvider;
-    class Settings;
+class TcpMessages;
+class DBProvider;
+class Settings;
 
-
+//! \brief The AddressBookServer class - основной класс для работы сервера
 class AddressBookServer : public QObject
 {
     Q_OBJECT
